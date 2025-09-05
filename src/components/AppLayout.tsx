@@ -9,7 +9,6 @@ import {
   IconDeviceDesktop,
 } from "@tabler/icons-react";
 import { motion } from "motion/react";
-import { cn } from "../lib/utils";
 import { useNavigation } from "../contexts/NavigationContext";
 
 interface LayoutProps {
