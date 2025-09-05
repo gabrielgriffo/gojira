@@ -1,70 +1,75 @@
 # CLAUDE.md
 
-Este arquivo fornece orientações para o Claude Code (claude.ai/code) ao trabalhar com código neste repositório.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Arquitetura do Projeto
+## Project Architecture
 
-Esta é uma aplicação desktop Tauri com frontend React + TypeScript e backend Rust.
+This is a Tauri desktop application with React + TypeScript frontend and Rust backend.
 
-**Estrutura do Frontend:**
-- React 18 + TypeScript + servidor de desenvolvimento Vite
-- Ponto de entrada principal: `src/main.tsx`
-- Componentes no diretório `src/`
-- Vite serve na porta 1420 (porta fixa para integração com Tauri)
+**Frontend Structure:**
+- React 18 + TypeScript with Vite development server
+- Main entry point: `src/main.tsx`
+- Components in `src/` directory
+- Vite serves on port 1420 (fixed port for Tauri integration)
+- TypeScript config with strict mode enabled
 
-**Estrutura do Backend:**
-- Biblioteca Rust em `src-tauri/src/lib.rs` com lógica principal da aplicação
-- Ponto de entrada binário em `src-tauri/src/main.rs` que chama `gojira_lib::run()`
-- Comandos Tauri para comunicação frontend-backend
-- Usa `tauri-plugin-opener` para integrações do sistema
+**Backend Structure:**
+- Rust library in `src-tauri/src/lib.rs` with main application logic
+- Binary entry point in `src-tauri/src/main.rs` that calls `gojira_lib::run()`
+- Tauri commands for frontend-backend communication (see `greet` command in `src-tauri/src/lib.rs:3`)
+- Uses `tauri-plugin-opener` for system integrations
+- Library name: `gojira_lib` (configured to avoid Windows naming conflicts)
 
-**Arquivos de Configuração Principais:**
-- `src-tauri/tauri.conf.json`: Configuração da aplicação Tauri (configurações de janela, comandos de build)
-- `src-tauri/Cargo.toml`: Dependências Rust e configuração da biblioteca
-- `package.json`: Dependências do frontend e scripts npm
-- `vite.config.ts`: Configuração do Vite otimizada para desenvolvimento Tauri
+**Key Configuration Files:**
+- `src-tauri/tauri.conf.json`: Tauri app configuration (window settings, build commands)
+- `src-tauri/Cargo.toml`: Rust dependencies and library configuration
+- `package.json`: Frontend dependencies and npm scripts
+- `vite.config.ts`: Vite configuration optimized for Tauri development
+- `tsconfig.json`: TypeScript configuration with strict linting enabled
 
-## Comandos Comuns de Desenvolvimento
+## Common Development Commands
 
-**Desenvolvimento:**
+**Development:**
 ```bash
-npm run dev          # Inicia servidor dev do Vite e Tauri em modo desenvolvimento
-npm run tauri dev    # Forma alternativa de iniciar desenvolvimento Tauri
+yarn dev             # Start Vite dev server and Tauri in development mode
+yarn tauri dev       # Alternative way to start Tauri development
 ```
 
 **Build:**
 ```bash
-npm run build        # Compila TypeScript e cria bundle de produção
-npm run tauri build  # Compila a aplicação Tauri completa para distribuição
+yarn build           # Compile TypeScript and create production bundle
+yarn tauri build     # Build complete Tauri application for distribution
 ```
 
-**Apenas Frontend:**
+**Frontend Only:**
 ```bash
-npm run preview      # Visualiza o frontend compilado
+yarn preview         # Preview compiled frontend
 ```
 
-**CLI do Tauri:**
+**Tauri CLI:**
 ```bash
-npm run tauri        # Acessa comandos da CLI do Tauri
+yarn tauri           # Access Tauri CLI commands
 ```
 
-## Fluxo de Desenvolvimento
+Note: The Tauri config uses `yarn` commands and this project uses yarn as the package manager.
 
-A aplicação usa o modelo padrão de desenvolvimento do Tauri onde:
-1. Frontend executa em http://localhost:1420 via Vite
-2. Backend compila para uma biblioteca nativa integrada com o frontend
-3. Comunicação acontece através de comandos Tauri (veja comando `greet` em `src-tauri/src/lib.rs:3`)
+## Development Flow
 
-O processo de build requer tanto compilação TypeScript (`tsc`) quanto bundling do Vite antes que o Tauri possa empacotar a aplicação final.
+The application uses the standard Tauri development model where:
+1. Frontend runs on http://localhost:1420 via Vite
+2. Backend compiles to a native library integrated with the frontend
+3. Communication happens through Tauri commands (see `greet` command in `src-tauri/src/lib.rs:3`)
 
-# Recursos Externos
+The build process requires both TypeScript compilation (`tsc`) and Vite bundling before Tauri can package the final application.
+
+# External Resources
 ## MCP Context7
-- **Quando usar**: Sempre que precisar de informações que não estão no projeto
-- **Sintaxe**: `@context7:sua_consulta_aqui`
-- **Casos de uso**:
-  - Documentação de bibliotecas
-  - Padrões de arquitetura
-  - Soluções para problemas específicos
-  - Validação de implementações
+- **When to use**: Whenever you need information not available in the project
+- **Syntax**: `@context7:your_query_here`
+- **Use cases**:
+  - Library documentation
+  - Architecture patterns
+  - Solutions for specific problems
+  - Implementation validation
 
-**Regra**: Antes de sugerir uma solução complexa, consulte o context7 para verificar se existe uma abordagem melhor ou mais atual.
+**Rule**: Before suggesting a complex solution, consult context7 to check if there's a better or more current approach.
