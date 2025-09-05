@@ -9,9 +9,33 @@ This is a Tauri desktop application with React + TypeScript frontend and Rust ba
 **Frontend Structure:**
 - React 18 + TypeScript with Vite development server
 - Main entry point: `src/main.tsx`
-- Components in `src/` directory
+- Tailwind CSS v4 for styling
 - Vite serves on port 1420 (fixed port for Tauri integration)
 - TypeScript config with strict mode enabled
+
+**Frontend Directory Structure:**
+```
+src/
+├── components/          # Reusable React components
+│   └── ui/             # Basic UI components (buttons, inputs, etc.)
+├── pages/              # Application pages/screens
+├── hooks/              # Custom React hooks
+├── contexts/           # React contexts for global state management
+├── services/           # API services and external integrations
+├── types/              # TypeScript type definitions
+├── constants/          # Application constants and configuration
+├── lib/                # Utilities and helper functions
+├── styles/             # CSS/Tailwind stylesheets
+└── assets/             # Images, icons, and static files
+```
+
+**Naming Conventions:**
+- **Components**: PascalCase (e.g., `UserCard.tsx`, `NavigationMenu.tsx`)
+- **Pages**: PascalCase (e.g., `Home.tsx`, `Settings.tsx`)
+- **Hooks**: camelCase with `use` prefix (e.g., `useLocalStorage.ts`, `useAuth.ts`)
+- **Utilities**: camelCase (e.g., `formatDate.ts`, `validateEmail.ts`)
+- **Types**: PascalCase (e.g., `User`, `ApiResponse`)
+- **Constants**: SCREAMING_SNAKE_CASE (e.g., `API_BASE_URL`, `MAX_RETRIES`)
 
 **Backend Structure:**
 - Rust library in `src-tauri/src/lib.rs` with main application logic
@@ -31,27 +55,27 @@ This is a Tauri desktop application with React + TypeScript frontend and Rust ba
 
 **Development:**
 ```bash
-yarn dev             # Start Vite dev server and Tauri in development mode
-yarn tauri dev       # Alternative way to start Tauri development
+npm run dev          # Start Vite dev server and Tauri in development mode
+npm run tauri dev    # Alternative way to start Tauri development
 ```
 
 **Build:**
 ```bash
-yarn build           # Compile TypeScript and create production bundle
-yarn tauri build     # Build complete Tauri application for distribution
+npm run build        # Compile TypeScript and create production bundle
+npm run tauri build  # Build complete Tauri application for distribution
 ```
 
 **Frontend Only:**
 ```bash
-yarn preview         # Preview compiled frontend
+npm run preview      # Preview compiled frontend
 ```
 
 **Tauri CLI:**
 ```bash
-yarn tauri           # Access Tauri CLI commands
+npm run tauri        # Access Tauri CLI commands
 ```
 
-Note: The Tauri config uses `yarn` commands and this project uses yarn as the package manager.
+Note: The Tauri config uses `npm` commands and this project uses npm as the package manager.
 
 ## Development Flow
 
