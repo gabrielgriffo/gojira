@@ -1,11 +1,14 @@
 import { NavigationProvider } from "./contexts/NavigationContext";
+import { ThemeProvider } from "./contexts/ThemeContext";
 import AppRouter from "./components/AppRouter";
 
 function App() {
   return (
-    <NavigationProvider>
-      <AppRouter />
-    </NavigationProvider>
+    <ThemeProvider>
+      <NavigationProvider>
+        <AppRouter />
+      </NavigationProvider>
+    </ThemeProvider>
   );
 }
 

@@ -1,3 +1,5 @@
+import ThemeSelector from '../components/ui/ThemeSelector';
+
 export default function Settings() {
   return (
     <div className="flex flex-col gap-6">
@@ -10,13 +12,8 @@ export default function Settings() {
           <h3 className="mb-4 font-semibold text-neutral-800 dark:text-neutral-200">
             Aparência
           </h3>
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <label className="text-sm text-neutral-600 dark:text-neutral-400">
-                Tema Escuro
-              </label>
-              <div className="h-6 w-12 animate-pulse rounded-full bg-gray-200 dark:bg-neutral-700"></div>
-            </div>
+          <div className="space-y-6">
+            <ThemeSelector />
             <div className="flex items-center justify-between">
               <label className="text-sm text-neutral-600 dark:text-neutral-400">
                 Modo Compacto
