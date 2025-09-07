@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Sidebar, SidebarBody, SidebarLink } from "./ui/sidebar";
+import { Sidebar, SidebarBody, SidebarLink } from "./ui/Sidebar";
 import {
   IconBrandTabler,
   IconSettings,
@@ -98,7 +98,7 @@ export default function AppLayout({ children }: LayoutProps) {
       </Sidebar>
       
       <div className="flex flex-1 overflow-hidden">
-        <div className="flex h-full w-full flex-1 flex-col gap-2 overflow-y-auto bg-white p-4 md:p-8 dark:bg-neutral-900">
+        <div className="flex h-full w-full flex-1 flex-col gap-2 overflow-y-auto bg-white p-4 md:p-8 dark:bg-neutral-900 rounded-l-[20px]">
           {children}
         </div>
       </div>

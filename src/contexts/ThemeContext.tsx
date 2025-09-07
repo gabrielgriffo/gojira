@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useEffect } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { getCurrentWindow } from '@tauri-apps/api/window';
+import { invoke } from '@tauri-apps/api/core';
 
 export type Theme = 'light' | 'dark' | 'system';
 
@@ -13,8 +15,29 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const THEME_STORAGE_KEY = 'gojira-theme';
 
+// Função auxiliar para aplicar tema via API do Tauri
+const applyTauriTheme = async (currentTheme: Theme, systemTheme: 'light' | 'dark') => {
+  try {
+    const window = getCurrentWindow();
+    let effectiveTheme = currentTheme;
+    
+    if (currentTheme === 'system') {
+      effectiveTheme = systemTheme;
+    }
+    
+    // Aplicar tema na janela atual
+    await window.setTheme(effectiveTheme as 'light' | 'dark');
+    
+    // Salvar no arquivo de configuração para próximas inicializações
+    await invoke('save_theme_to_config', { theme: effectiveTheme });
+
+  } catch (error) {
+    console.warn('Erro ao aplicar tema via Tauri:', error);
+  }
+};
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useLocalStorage<Theme>(THEME_STORAGE_KEY, 'system');
+  const [theme, setThemeState] = useLocalStorage<Theme>(THEME_STORAGE_KEY, 'system');
 
   // Detectar preferência do sistema
   const getSystemTheme = (): 'light' | 'dark' => {
@@ -27,27 +50,29 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   // Aplicar tema atual ao documento
   const applyTheme = (currentTheme: Theme) => {
     const root = document.documentElement;
+    const systemTheme = getSystemTheme();
     
     // Remover classes existentes
     root.classList.remove('dark', 'light');
     
-    if (currentTheme === 'system') {
-      const systemTheme = getSystemTheme();
-      root.classList.add(systemTheme);
-      if (systemTheme === 'dark') {
-        root.classList.add('dark');
-      }
-    } else {
-      root.classList.add(currentTheme);
-      if (currentTheme === 'dark') {
-        root.classList.add('dark');
-      }
-    }
+    // Determinar o tema efetivo
+    const effectiveTheme = currentTheme === 'system' ? systemTheme : currentTheme;
+    
+    // Adicionar apenas a classe do tema efetivo
+    root.classList.add(effectiveTheme);
+
+    // Aplicar tema via Tauri
+    applyTauriTheme(currentTheme, systemTheme);
 
     // Debug log para desenvolvimento
     if (import.meta.env.DEV) {
-      console.log('🎨 Theme applied:', currentTheme, '| Root classes:', Array.from(root.classList));
+      console.log('Tema aplicado:', effectiveTheme, '| Classes:', Array.from(root.classList));
     }
+  };
+
+  // Função setTheme personalizada
+  const setTheme = (newTheme: Theme) => {
+    setThemeState(newTheme);
   };
 
   // Escutar mudanças na preferência do sistema
@@ -77,16 +102,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     applyTheme(theme);
   }, [theme]);
-
-  // Aplicar tema inicial - executar apenas uma vez na montagem
-  useEffect(() => {
-    // Forçar aplicação do tema após um pequeno delay para garantir que o DOM está pronto
-    const timeoutId = setTimeout(() => {
-      applyTheme(theme);
-    }, 0);
-
-    return () => clearTimeout(timeoutId);
-  }, []); // Array vazio para executar apenas na montagem
 
   const contextValue: ThemeContextType = {
     theme,
