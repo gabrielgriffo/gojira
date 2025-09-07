@@ -1,5 +1,6 @@
 import ThemeSelector from '../components/ui/ThemeSelector';
 import LanguageSelector from '../components/ui/LanguageSelector';
+import { JiraConfigForm } from '../components/jira/JiraConfigForm';
 import { useTranslation } from 'react-i18next';
 
 export default function Settings() {
@@ -11,6 +12,11 @@ export default function Settings() {
         {t('settings.title')}
       </h1>
       
+      {/* Configuração JIRA - Seção Principal */}
+      <div className="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-700 dark:bg-neutral-800 mb-6">
+        <JiraConfigForm />
+      </div>
+
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-700 dark:bg-neutral-800">
           <h3 className="mb-4 font-semibold text-neutral-800 dark:text-neutral-200">
