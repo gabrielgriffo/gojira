@@ -1,9 +1,16 @@
 [package]
 name = "gojira"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
+description = "Modern desktop application for project management and development tools"
+authors = ["Gabriel Griffo"]
+repository = "https://github.com/gabrielgriffo/gojira"
+homepage = "https://github.com/gabrielgriffo/gojira"
+documentation = "https://github.com/gabrielgriffo/gojira#readme"
+keywords = ["tauri", "desktop", "development", "tools", "productivity"]
+categories = ["development-tools", "gui"]
+readme = "../README.md"
 edition = "2021"
+rust-version = "1.75"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

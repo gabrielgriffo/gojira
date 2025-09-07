@@ -25,12 +25,42 @@
   "bundle": {
     "active": true,
     "targets": "all",
+    "publisher": "Gabriel Griffo",
+    "category": "DeveloperTool",
+    "shortDescription": "Modern desktop application for project management and development tools",
+    "longDescription": "Gojira is a powerful desktop application built with Tauri and React, designed to provide developers with essential project management and development tools in a modern, efficient interface.",
+    "homepage": "https://github.com/gabrielgriffo/gojira",
+    "licenseFile": null,
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ]
+    ],
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": null,
+      "tsp": false,
+      "webviewInstallMode": {
+        "silent": true,
+        "type": "downloadBootstrapper"
+      },
+      "allowDowngrades": false,
+      "wix": null,
+      "nsis": {
+        "displayLanguageSelector": false,
+        "installerHooks": null,
+        "template": null,
+        "headerImage": null,
+        "sidebarImage": null,
+        "installerIcon": null,
+        "installMode": "currentUser",
+        "languages": ["English"],
+        "customLanguageFiles": null,
+        "compression": "lzma"
+      }
+    }
   }
 }
