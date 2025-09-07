@@ -1,14 +1,17 @@
 import { NavigationProvider } from "./contexts/NavigationContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { LanguageProvider } from "./contexts/LanguageContext";
 import AppRouter from "./components/AppRouter";
 
 function App() {
   return (
-    <ThemeProvider>
-      <NavigationProvider>
-        <AppRouter />
-      </NavigationProvider>
-    </ThemeProvider>
+    <LanguageProvider>
+      <ThemeProvider>
+        <NavigationProvider>
+          <AppRouter />
+        </NavigationProvider>
+      </ThemeProvider>
+    </LanguageProvider>
   );
 }
 

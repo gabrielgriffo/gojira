@@ -10,42 +10,43 @@ import {
 } from "@tabler/icons-react";
 import { motion } from "motion/react";
 import { useNavigation } from "../contexts/NavigationContext";
+import { useTranslation } from "react-i18next";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
-const links = [
+const createLinks = (t: any) => [
   {
-    label: "Dashboard",
+    label: t('navigation.dashboard'),
     href: "dashboard",
     icon: (
       <IconBrandTabler className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
     ),
   },
   {
-    label: "Development",
+    label: t('navigation.development'),
     href: "development",
     icon: (
       <IconUserBolt className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
     ),
   },
   {
-    label: "History",
+    label: t('navigation.history'),
     href: "history",
     icon: (
       <IconHistory className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
     ),
   },
   {
-    label: "Monitoring",
+    label: t('navigation.monitoring'),
     href: "monitoring",
     icon: (
       <IconDeviceDesktop className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
     ),
   },
   {
-    label: "Settings",
+    label: t('navigation.settings'),
     href: "settings",
     icon: (
       <IconSettings className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
@@ -56,6 +57,9 @@ const links = [
 export default function AppLayout({ children }: LayoutProps) {
   const [open, setOpen] = useState(false);
   const { navigateTo } = useNavigation();
+  const { t } = useTranslation();
+  
+  const links = createLinks(t);
   
   return (
     <div

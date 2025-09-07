@@ -5,7 +5,15 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
       const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
+      if (!item) return initialValue;
+      
+      // Tentar JSON.parse primeiro, se falhar, usar como string
+      try {
+        return JSON.parse(item);
+      } catch {
+        // Se não conseguir fazer parse, provavelmente é uma string simples
+        return item as T;
+      }
     } catch (error) {
       console.error(`Error reading localStorage key "${key}":`, error);
       return initialValue;
