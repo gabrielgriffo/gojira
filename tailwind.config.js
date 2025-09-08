@@ -6,7 +6,22 @@ export default {
   ],
   darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+      },
+    },
   },
-  plugins: [],
+  plugins: [
+    function({ addUtilities }) {
+      addUtilities({
+        '.perspective-distant': {
+          perspective: '1000px',
+        },
+        '.transform-3d': {
+          'transform-style': 'preserve-3d',
+        },
+      });
+    }
+  ],
 }

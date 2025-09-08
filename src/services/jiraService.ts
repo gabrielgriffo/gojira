@@ -1,21 +1,11 @@
-// @ts-ignore - Tauri API pode não estar disponível durante desenvolvimento
-const invoke = typeof window !== 'undefined' && '__TAURI_IPC__' in window 
-  ? (window as any).__TAURI_IPC__.invoke 
-  : () => Promise.resolve();
+import { invoke } from '@tauri-apps/api/core';
 import type { JiraConfig, JiraUser, JiraProject, JiraIssue, JiraConnectionStatus, EnvironmentInfo } from '../types/jira';
-import { StorageBackend, SecurityLevel } from '../types/jira';
-
-const isTauri = typeof window !== 'undefined' && '__TAURI_IPC__' in window;
+import { SecurityLevel } from '../types/jira';
 
 export class JiraService {
   // Verificar se tem configuração JIRA
   static async hasConfig(): Promise<boolean> {
-    if (isTauri) {
-      return invoke('has_jira_config');
-    } else {
-      // Mock para desenvolvimento
-      return localStorage.getItem('goji_dev_jira_config') !== null;
-    }
+    return invoke('has_jira_config');
   }
 
   // Salvar configuração JIRA
@@ -24,130 +14,40 @@ export class JiraService {
     email: string,
     token: string
   ): Promise<void> {
-    if (isTauri) {
-      return invoke('save_jira_config', { url, email, token });
-    } else {
-      // Mock para desenvolvimento
-      console.warn('🚨 Modo desenvolvimento: credenciais JIRA salvas localmente (INSEGURO)');
-      const config: JiraConfig = {
-        url,
-        email,
-        token,
-        created_at: new Date().toISOString(),
-      };
-      localStorage.setItem('goji_dev_jira_config', JSON.stringify(config));
-    }
+    return invoke('save_jira_config', { url, email, token });
   }
 
   // Recuperar configuração JIRA (token mascarado)
   static async getConfig(): Promise<JiraConfig | null> {
-    if (isTauri) {
-      return invoke('get_jira_config');
-    } else {
-      // Mock para desenvolvimento
-      const stored = localStorage.getItem('goji_dev_jira_config');
-      if (stored) {
-        const config = JSON.parse(stored);
-        config.token = '••••••••••••••••'; // Mascarar token
-        return config;
-      }
-      return null;
-    }
+    return invoke('get_jira_config');
   }
 
   // Testar conexão com JIRA
   static async testConnection(): Promise<boolean> {
-    if (isTauri) {
-      return invoke('test_jira_connection');
-    } else {
-      // Mock sempre retorna sucesso após delay
-      return new Promise(resolve => 
-        setTimeout(() => resolve(true), 1000)
-      );
-    }
+    return invoke('test_jira_connection');
   }
 
   // Limpar configuração JIRA
   static async clearConfig(): Promise<void> {
-    if (isTauri) {
-      return invoke('clear_jira_config');
-    } else {
-      localStorage.removeItem('goji_dev_jira_config');
-    }
+    return invoke('clear_jira_config');
   }
 
   // Obter usuário atual do JIRA
   static async getCurrentUser(): Promise<JiraUser> {
-    if (isTauri) {
-      const userJson: string = await invoke('get_current_jira_user');
-      return JSON.parse(userJson);
-    } else {
-      // Mock para desenvolvimento
-      return {
-        accountId: '123456789',
-        displayName: 'Usuário de Desenvolvimento',
-        emailAddress: 'dev@exemplo.com',
-        active: true
-      };
-    }
+    const userJson: string = await invoke('get_current_jira_user');
+    return JSON.parse(userJson);
   }
 
   // Obter projetos do JIRA
   static async getProjects(): Promise<JiraProject[]> {
-    if (isTauri) {
-      const projectsJson: string = await invoke('get_jira_projects');
-      return JSON.parse(projectsJson);
-    } else {
-      // Mock para desenvolvimento
-      return [
-        {
-          id: '1',
-          key: 'PROJ',
-          name: 'Projeto de Exemplo',
-          description: 'Projeto mock para desenvolvimento',
-          projectTypeKey: 'software'
-        },
-        {
-          id: '2', 
-          key: 'TEST',
-          name: 'Projeto de Testes',
-          description: 'Outro projeto mock',
-          projectTypeKey: 'software'
-        }
-      ];
-    }
+    const projectsJson: string = await invoke('get_jira_projects');
+    return JSON.parse(projectsJson);
   }
 
   // Buscar issues usando JQL
   static async searchIssues(jql: string, maxResults: number = 50): Promise<JiraIssue[]> {
-    if (isTauri) {
-      const issuesJson: string = await invoke('search_jira_issues', { jql, maxResults });
-      return JSON.parse(issuesJson);
-    } else {
-      // Mock para desenvolvimento
-      return [
-        {
-          id: '1',
-          key: 'PROJ-1',
-          summary: 'Issue de exemplo',
-          status: 'To Do',
-          assignee: 'João Silva',
-          reporter: 'Maria Santos',
-          created: new Date(Date.now() - 86400000).toISOString(),
-          updated: new Date().toISOString()
-        },
-        {
-          id: '2',
-          key: 'PROJ-2', 
-          summary: 'Outra issue de exemplo',
-          status: 'In Progress',
-          assignee: 'Pedro Oliveira',
-          reporter: 'Ana Costa',
-          created: new Date(Date.now() - 172800000).toISOString(),
-          updated: new Date(Date.now() - 3600000).toISOString()
-        }
-      ];
-    }
+    const issuesJson: string = await invoke('search_jira_issues', { jql, maxResults });
+    return JSON.parse(issuesJson);
   }
 
   // Verificar status da conexão
@@ -229,20 +129,8 @@ export class JiraService {
 
   // Obter informações do ambiente de segurança
   static async getEnvironmentInfo(): Promise<EnvironmentInfo> {
-    if (isTauri) {
-      const envInfoJson: string = await invoke('get_jira_environment_info');
-      return JSON.parse(envInfoJson);
-    } else {
-      // Mock para desenvolvimento
-      return {
-        is_wsl: false,
-        is_wsl2: false,
-        has_keyring: false,
-        has_desktop_environment: true,
-        storage_backend: StorageBackend.InMemory,
-        security_level: SecurityLevel.Low
-      };
-    }
+    const envInfoJson: string = await invoke('get_jira_environment_info');
+    return JSON.parse(envInfoJson);
   }
 
   // Obter descrição do nível de segurança

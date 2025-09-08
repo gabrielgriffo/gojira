@@ -161,6 +161,7 @@ async fn get_jira_environment_info() -> Result<String, String> {
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
+        .plugin(tauri_plugin_window_state::Builder::default().build())
         .invoke_handler(tauri::generate_handler![
             save_theme_to_config,
             save_jira_config,
