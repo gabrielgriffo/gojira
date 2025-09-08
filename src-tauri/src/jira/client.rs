@@ -44,7 +44,7 @@ impl JiraClient {
     pub fn new() -> Result<Self, JiraError> {
         let http_client = reqwest::Client::builder()
             .timeout(std::time::Duration::from_secs(30))
-            .user_agent("Gojira/1.0.0")
+            .user_agent("Goji/1.0.0")
             .build()?;
 
         Ok(Self {

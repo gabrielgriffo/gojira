@@ -25,7 +25,7 @@ i18n
 
     detection: {
       order: ['localStorage', 'navigator', 'htmlTag'],
-      lookupLocalStorage: 'gojira-language',
+      lookupLocalStorage: 'goji-language',
       caches: ['localStorage'],
     }
   });

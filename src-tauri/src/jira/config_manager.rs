@@ -20,7 +20,7 @@ pub struct JiraConfigManager {
 
 impl JiraConfigManager {
     pub fn new() -> Result<Self, JiraError> {
-        let secure_storage = SecureStorage::new("gojira", "jira_config")?;
+        let secure_storage = SecureStorage::new("goji", "jira_config")?;
         
         Ok(Self {
             secure_storage,

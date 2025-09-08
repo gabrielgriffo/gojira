@@ -1,11 +1,11 @@
 [package]
-name = "gojira"
+name = "goji"
 version = "0.1.0"
 description = "Modern desktop application for project management and development tools"
 authors = ["Gabriel Griffo"]
-repository = "https://github.com/gabrielgriffo/gojira"
-homepage = "https://github.com/gabrielgriffo/gojira"
-documentation = "https://github.com/gabrielgriffo/gojira#readme"
+repository = "https://github.com/gabrielgriffo/goji"
+homepage = "https://github.com/gabrielgriffo/goji"
+documentation = "https://github.com/gabrielgriffo/goji#readme"
 keywords = ["tauri", "desktop", "development", "tools", "productivity"]
 categories = ["development-tools", "gui"]
 readme = "../README.md"
@@ -18,7 +18,7 @@ rust-version = "1.75"
 # The `_lib` suffix may seem redundant but it is necessary
 # to make the lib name unique and wouldn't conflict with the bin name.
 # This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
-name = "gojira_lib"
+name = "goji_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]

@@ -14,7 +14,7 @@ export class JiraService {
       return invoke('has_jira_config');
     } else {
       // Mock para desenvolvimento
-      return localStorage.getItem('gojira_dev_jira_config') !== null;
+      return localStorage.getItem('goji_dev_jira_config') !== null;
     }
   }
 
@@ -35,7 +35,7 @@ export class JiraService {
         token,
         created_at: new Date().toISOString(),
       };
-      localStorage.setItem('gojira_dev_jira_config', JSON.stringify(config));
+      localStorage.setItem('goji_dev_jira_config', JSON.stringify(config));
     }
   }
 
@@ -45,7 +45,7 @@ export class JiraService {
       return invoke('get_jira_config');
     } else {
       // Mock para desenvolvimento
-      const stored = localStorage.getItem('gojira_dev_jira_config');
+      const stored = localStorage.getItem('goji_dev_jira_config');
       if (stored) {
         const config = JSON.parse(stored);
         config.token = '••••••••••••••••'; // Mascarar token
@@ -72,7 +72,7 @@ export class JiraService {
     if (isTauri) {
       return invoke('clear_jira_config');
     } else {
-      localStorage.removeItem('gojira_dev_jira_config');
+      localStorage.removeItem('goji_dev_jira_config');
     }
   }
 

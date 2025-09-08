@@ -1,5 +1,5 @@
 // Constantes da aplicação
-export const APP_NAME = "Gojira";
+export const APP_NAME = "Goji";
 export const APP_VERSION = "0.1.0";
 
 export const ROUTES = {

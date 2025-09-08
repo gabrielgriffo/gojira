@@ -1,6 +1,6 @@
-# 🚀 Gojira
+# 🚀 Goji
 
-**Gojira** is a modern desktop application for project management and development tools, built with Tauri, React, and TypeScript. It provides a powerful, secure, and intuitive interface for managing your development workflow with integrated JIRA connectivity.
+**Goji** is a modern desktop application for project management and development tools, built with Tauri, React, and TypeScript. It provides a powerful, secure, and intuitive interface for managing your development workflow with integrated JIRA connectivity.
 
 ## ✨ Key Features
 
@@ -94,7 +94,7 @@ Secure and seamless integration with Atlassian JIRA for enhanced project managem
 
 ## 🌐 Multi-platform Support
 
-Gojira runs natively on:
+Goji runs natively on:
 - **Windows**: Windows 10/11 with native Windows Credential Manager integration
 - **macOS**: macOS 10.15+ with native macOS Keychain integration
 - **Linux**: Various distributions with native Linux Secret Service integration
@@ -124,7 +124,7 @@ To enable native keyring support in WSL2:
    echo 'gnome-keyring-daemon --start --components=secrets' >> ~/.bashrc
    ```
 
-After setup, restart Gojira to use native keyring storage for maximum security.
+After setup, restart Goji to use native keyring storage for maximum security.
 
 ## 🛠️ Extensibility
 
@@ -136,4 +136,4 @@ The application is built with extensibility in mind:
 
 ---
 
-**Gojira** combines the power of modern web technologies with native desktop performance, providing a secure and efficient workspace for development teams and project management.
+**Goji** combines the power of modern web technologies with native desktop performance, providing a secure and efficient workspace for development teams and project management.

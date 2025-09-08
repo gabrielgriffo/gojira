@@ -11,7 +11,7 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-const LANGUAGE_STORAGE_KEY = 'gojira-language';
+const LANGUAGE_STORAGE_KEY = 'goji-language';
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   // Detectar idioma do sistema para valor inicial

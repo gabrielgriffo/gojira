@@ -1632,7 +1632,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "gojira"
+name = "goji"
 version = "0.1.0"
 dependencies = [
  "aes-gcm",

@@ -1,4 +1,4 @@
-# 🛡️ Melhorias de Segurança WSL2 - Gojira
+# 🛡️ Melhorias de Segurança WSL2 - Goji
 
 ## ✅ Implementação Completa
 

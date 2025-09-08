@@ -13,7 +13,7 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-const THEME_STORAGE_KEY = 'gojira-theme';
+const THEME_STORAGE_KEY = 'goji-theme';
 
 // Função auxiliar para aplicar tema via API do Tauri
 const applyTauriTheme = async (currentTheme: Theme, systemTheme: 'light' | 'dark') => {

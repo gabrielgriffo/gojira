@@ -39,10 +39,10 @@ src/
 
 **Backend Structure:**
 - Rust library in `src-tauri/src/lib.rs` with main application logic
-- Binary entry point in `src-tauri/src/main.rs` that calls `gojira_lib::run()`
+- Binary entry point in `src-tauri/src/main.rs` that calls `goji_lib::run()`
 - Tauri commands for frontend-backend communication (see `greet` command in `src-tauri/src/lib.rs:3`)
 - Uses `tauri-plugin-opener` for system integrations
-- Library name: `gojira_lib` (configured to avoid Windows naming conflicts)
+- Library name: `goji_lib` (configured to avoid Windows naming conflicts)
 
 **Key Configuration Files:**
 - `src-tauri/tauri.conf.json`: Tauri app configuration (window settings, build commands)
