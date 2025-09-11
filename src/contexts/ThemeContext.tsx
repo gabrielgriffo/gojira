@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { getCurrentWindow } from '@tauri-apps/api/window';
-import { invoke } from '@tauri-apps/api/core';
 
 export type Theme = 'light' | 'dark' | 'system';
 
@@ -29,7 +28,7 @@ const applyTauriTheme = async (currentTheme: Theme, systemTheme: 'light' | 'dark
     await window.setTheme(effectiveTheme as 'light' | 'dark');
     
     // Salvar no arquivo de configuração para próximas inicializações
-    await invoke('save_theme_to_config', { theme: effectiveTheme });
+    // await invoke('save_theme_to_config', { theme: effectiveTheme });
 
   } catch (error) {
     console.warn('Erro ao aplicar tema via Tauri:', error);
@@ -63,11 +62,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
     // Aplicar tema via Tauri
     applyTauriTheme(currentTheme, systemTheme);
-
-    // Debug log para desenvolvimento
-    if (import.meta.env.DEV) {
-      console.log('Tema aplicado:', effectiveTheme, '| Classes:', Array.from(root.classList));
-    }
   };
 
   // Função setTheme personalizada

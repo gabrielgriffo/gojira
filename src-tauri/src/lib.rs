@@ -1,52 +1,10 @@
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
+use tauri::Manager;
 
 mod jira;
 use jira::{config_manager::{JiraConfigManager, JiraConfig}, client::JiraClient};
 use chrono::Utc;
 
-#[tauri::command]
-fn save_theme_to_config(theme: &str) -> Result<(), String> {
-    use std::path::Path;
-    use std::fs;
-    
-    // Caminho para o arquivo de configuração
-    let config_path = Path::new("src-tauri/tauri.conf.json");
-    
-    // Ler o arquivo atual
-    let config_content = fs::read_to_string(config_path)
-        .map_err(|e| format!("Erro ao ler configuração: {}", e))?;
-    
-    // Parse do JSON
-    let mut config: serde_json::Value = serde_json::from_str(&config_content)
-        .map_err(|e| format!("Erro ao fazer parse do JSON: {}", e))?;
-    
-    // Mapear theme para o formato esperado pelo Tauri
-    let tauri_theme = match theme {
-        "light" => "Light",
-        "dark" => "Dark",
-        _ => "Dark" // fallback
-    };
-    
-    // Atualizar o tema na configuração
-    if let Some(app) = config.get_mut("app") {
-        if let Some(windows) = app.get_mut("windows") {
-            if let Some(windows_array) = windows.as_array_mut() {
-                if let Some(first_window) = windows_array.get_mut(0) {
-                    first_window["theme"] = serde_json::Value::String(tauri_theme.to_string());
-                }
-            }
-        }
-    }
-    
-    // Escrever o arquivo atualizado
-    let updated_content = serde_json::to_string_pretty(&config)
-        .map_err(|e| format!("Erro ao serializar JSON: {}", e))?;
-    
-    fs::write(config_path, updated_content)
-        .map_err(|e| format!("Erro ao escrever configuração: {}", e))?;
-    
-    Ok(())
-}
 
 // Comandos JIRA para gerenciar credenciais
 #[tauri::command]
@@ -157,13 +115,32 @@ async fn get_jira_environment_info() -> Result<String, String> {
     Ok(serde_json::to_string(&env_info).unwrap())
 }
 
+// Comandos para controle de janela
+#[tauri::command]
+async fn show_main_window(app: tauri::AppHandle) -> Result<(), String> {
+    if let Some(window) = app.get_webview_window("main") {
+        window.show().map_err(|e| format!("Erro ao mostrar janela: {}", e))?;
+        window.set_focus().map_err(|e| format!("Erro ao focar janela: {}", e))?;
+    }
+    Ok(())
+}
+
+#[tauri::command]
+async fn hide_main_window(app: tauri::AppHandle) -> Result<(), String> {
+    if let Some(window) = app.get_webview_window("main") {
+        window.hide().map_err(|e| format!("Erro ao esconder janela: {}", e))?;
+    }
+    Ok(())
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
-        .plugin(tauri_plugin_window_state::Builder::default().build())
+        .plugin(tauri_plugin_window_state::Builder::default()
+            .with_filename("../Goji/.window-state.json")
+            .build())
         .invoke_handler(tauri::generate_handler![
-            save_theme_to_config,
             save_jira_config,
             get_jira_config,
             test_jira_connection,
@@ -172,7 +149,9 @@ pub fn run() {
             get_current_jira_user,
             get_jira_projects,
             search_jira_issues,
-            get_jira_environment_info
+            get_jira_environment_info,
+            show_main_window,
+            hide_main_window
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

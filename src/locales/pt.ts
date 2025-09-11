@@ -37,7 +37,7 @@ export const pt = {
     system: "Sistema"
   },
   language: {
-    pt: "Português",
-    en: "English"
+    pt: "Português (BR)",
+    en: "Inglês (US)"
   }
 };
